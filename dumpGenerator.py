@@ -25,7 +25,7 @@ for ws in wb:
             pEmail = row[3].value
             pId = 'p%d' % (pIndex)
             persons.append({'name': pFullName, 'email': pEmail})
-            relations.append({'pEmail': pEmail, 'sCode': code,
+            relations.append({'pEmail': pEmail, 'sEmail': email,
                               'relationship': row[0].value, 'grade': row[4].value})
             pIndex += 1
     wsnumber += 1
@@ -65,9 +65,9 @@ for p in uniquePersons:
 for r in relations:
     if(r['relationship'] == 'Docente'):
         dump.write(
-            'MATCH (auxP: Person {email:"%s"}), (auxS: Subject {code:"%s"}) CREATE (auxP)-[:TEACH]->(auxS);\n' % (r['pEmail'], r['sCode']))
+            'MATCH (auxP: Person {email:"%s"}), (auxS: Subject {email:"%s"}) CREATE (auxP)-[:TEACH]->(auxS);\n' % (r['pEmail'], r['sEmail']))
     if(r['relationship'] == 'Alumno'):
         dump.write(
-            'MATCH (auxP: Person {email:"%s"}), (auxS: Subject {code:"%s"}) CREATE (auxP)-[:STUDIED {grade:"%d"}]->(auxS);\n' % (r['pEmail'], r['sCode'],r['grade']))
+            'MATCH (auxP: Person {email:"%s"}), (auxS: Subject {email:"%s"}) CREATE (auxP)-[:STUDIED {grade:"%d"}]->(auxS);\n' % (r['pEmail'], r['sEmail'],r['grade']))
     
 dump.close()
